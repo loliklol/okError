@@ -1,12 +1,11 @@
 # okError
-Пример запуска отдельного скрипта 
-php script.php /home/vagrant/sitedop/logs/app.log
+Инструкция по запуску 
+1) Клонируем репозиторий.
+2) docker build -t okerror .
+3) docker run --name okerror -d -p 24000:80 okerror                                                                                           --name имя контейнера
+    -d запуск в фоне
+    -p 24000:80  проброс 80 порта контейнера на 24000 хоста
 
-Сделано на SLIM. Три роута "/ok" отдает ок "/error" отдает error "/" отдает информацию по тз, пример вывода ниже. 
-значение	кол-во
-10.0.2.2	11
-ok	5
-error	5
+тестим с хоста curl localhost:24000/ok,curl localhost:24000/error итоговый вывод curl localhost:24000,
 
-роуты /ok /error пишем апишники согласно тз и логируем коннекты по ним же  Логи пишутся в папку logs/app.log от корня проекта.
-
+Проверка работы скрипта: docker exec okerror php script.php logs/app.log
