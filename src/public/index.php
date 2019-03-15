@@ -36,6 +36,7 @@ $app->get('/error', function($request, $response) {
 });
 
 $app->get('/',function($request,$response){
+    if(file_exists("../logs/app.log")){
     $buff=file_get_contents('../logs/app.log',true);
     $buff=explode('[] []',$buff);
     $buff=collect($buff)->map(function($item,$key){
@@ -45,7 +46,9 @@ $app->get('/',function($request,$response){
     })->filter()->countBy()->All();
     $param=['buff'=>$buff];
     return $this->renderer->render($response,'test.phtml',$param);
-    #return $response->write("$buff");
+    }
+    
+    return $response->write("Нет данных о попытках подключения");
 });
 
 
